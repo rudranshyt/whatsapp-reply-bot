@@ -1,6 +1,10 @@
+# Written By- Rudransh Shukla
+
+
 import pywhatkit
 from flask import Flask, request, render_template
 import time
+import concurrent.futures
 
 app = Flask(__name__)
 
@@ -14,8 +18,7 @@ def send_message():
     message = request.form["message"]
     number_of_times = int(request.form["numberOfTimes"])
     
-    send_messages(phone_number, message, number_of_times)
-    
+    send_messages_concurrently(phone_number, message, number_of_times)
     
     scheduled_time = request.form.get("scheduledTime")
     if scheduled_time:
@@ -23,9 +26,16 @@ def send_message():
 
     return "Messages sent successfully!"
 
-def send_messages(phone_number, message, number_of_times):
-    for _ in range(number_of_times):
-        pywhatkit.sendwhatmsg(phone_number, message, time.localtime().tm_hour, time.localtime().tm_min + 1)
+def send_messages_concurrently(phone_number, message, number_of_times):
+    with concurrent.futures.ThreadPoolExecutor() as executor:
+        
+        futures = [executor.submit(send_message_thread, phone_number, message) for _ in range(number_of_times)]
+        
+        
+        concurrent.futures.wait(futures)
+
+def send_message_thread(phone_number, message):
+    pywhatkit.sendwhatmsg(phone_number, message, time.localtime().tm_hour, time.localtime().tm_min + 1)
 
 def schedule_message(phone_number, message, scheduled_time):
     scheduled_time_parts = scheduled_time.split(":")

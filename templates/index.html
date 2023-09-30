@@ -1,27 +1,55 @@
 <!DOCTYPE html>
 <html>
-
-<head>
+  <head>
     <title>Send WhatsApp Messages</title>
-</head>
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='styles.css') }}"
+    />
+  </head>
 
-<body>
-    <h1>Send WhatsApp Messages</h1>
-    <form action="/send_message" method="post">
-        <label for="phoneNumber">Phone number:</label>
-        <input type="text" name="phoneNumber" id="phoneNumber" placeholder="+15555555555" />
-
-        <label for="message">Message:</label>
-        <input type="text" name="message" id="message" placeholder="Hello world!" />
-
-        <label for="numberOfTimes">Number of times:</label>
-        <input type="number" name="numberOfTimes" id="numberOfTimes" value="1" />
-
-        <label for="scheduledTime">Scheduled time (optional):</label>
-        <input type="time" name="scheduledTime" id="scheduledTime" />
-
-        <button type="submit">Send message</button>
-    </form>
-</body>
-
+  <body>
+    <div class="container">
+      <h1>Send WhatsApp Messages</h1>
+      <form action="/send_message" method="post" class="message-form">
+        <div class="inputs">
+          <label for="phoneNumber">Phone number:</label>
+          <input
+            type="text"
+            name="phoneNumber"
+            id="phoneNumber"
+            placeholder="+15555555555"
+            class="input-field"
+          />
+          <label for="message">Message:</label>
+          <input
+            type="text"
+            name="message"
+            id="message"
+            placeholder="Hello world!"
+            class="input-field"
+          />
+          <label for="numberOfTimes">Number of times:</label>
+          <input
+            type="number"
+            name="numberOfTimes"
+            id="numberOfTimes"
+            value="1"
+            class="input-field"
+          />
+          <label for="scheduledTime">Scheduled time (optional):</label>
+          <input
+            type="time"
+            name="scheduledTime"
+            id="scheduledTime"
+            class="input-field"
+          />
+          <button type="submit" class="submit-button">Send message</button>
+        </div>
+      </form>
+      <div class="text-line">
+        <h2>Designed with ❤️ By Rudransh Shukla</h2>
+      </div>
+    </div>
+  </body>
 </html>
